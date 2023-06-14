@@ -13,7 +13,6 @@ public class Edge : MonoBehaviour
     void Start()
     {
         transform.position = (pointA.p() + pointB.p()) / 2;
-        transform.rotation = Quaternion.LookRotation(pointA.p() - pointB.p());
     }
 
     public List<Vector3> points() {

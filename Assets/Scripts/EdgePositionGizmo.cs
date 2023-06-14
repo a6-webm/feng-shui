@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Edge))]
 [ExecuteAlways]
 public class EdgePositionGizmo : MonoBehaviour
 {
@@ -19,7 +20,6 @@ public class EdgePositionGizmo : MonoBehaviour
             edge = GetComponent<Edge>();
         } else {
             transform.position = (edge.points()[0] + edge.points()[1]) / 2;
-            transform.rotation = Quaternion.LookRotation(edge.points()[0] - edge.points()[1]);
         }
     }
 }
