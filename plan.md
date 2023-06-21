@@ -11,6 +11,8 @@ some objects aren't, e.g. a door has a premade mesh and has two child point obje
 
 scale: 10 units = 1 meter
 
+Localization package
+
 100 levels?
 
 drawing lines:
@@ -30,7 +32,15 @@ game mechanics:
 - ying yang/balance
 - ba gua
 - elements/colors/shapes/direction
+ - kitchen is fire
 - some levels in ancient china, some modern day; rules can play out differently (e.g. ba gua)
 - managing chi (life chi, dead chi, killing chi, movement chi)
+ - the chi flow probably shouldn't be a fluid sim or something, cause we need to keep the state space kinda discrete so we can make good puzzles lol
+ - chandeliers killing chi
 - command position
+ - could do only furniture with a specific mark/pattern needs to be in command position
 - chinese numerology
+- "social circle"? (ring of chairs/sofas)
+ - need to place a coffee table in the middle
+- lighting
+- mirrors
