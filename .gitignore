@@ -1,5 +1,12 @@
 .vscode
 
+.obsidian/workspace
+.obsidian/themes
+
+# exclude plugins/ but keep the data.json files in order to sync plugin settings
+.obsidian/plugins/*/*
+!.obsidian/plugins/*/data.json
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
