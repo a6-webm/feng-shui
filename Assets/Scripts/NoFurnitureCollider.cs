@@ -36,7 +36,10 @@ public class NoFurnitureCollider : MonoBehaviour
 
         MeshCollider meshCollider = gameObject.AddComponent<MeshCollider>();
         meshCollider.convex = true;
-        meshCollider.isTrigger = true;
+        meshCollider.isTrigger = false;
         meshCollider.sharedMesh = mesh;
+        // Rigidbody rigidbody = gameObject.AddComponent<Rigidbody>();
+        // rigidbody.isKinematic = true;
+        // rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
     }
 }

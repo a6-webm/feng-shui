@@ -19,9 +19,12 @@ public class QuadPositionGizmo : MonoBehaviour
         if (quad == null) {
             quad = GetComponent<Quad>();
         } else {
-            Vector3 sum = new Vector3();
-            quad.points().ForEach(p => sum += p);
-            transform.position = sum / 4;
+            List<Vector3> points = quad.points();
+            if (points != null) {
+                Vector3 sum = new Vector3();
+                points.ForEach(p => sum += p);
+                transform.position = sum / 4;
+            }
         }
     }
 }

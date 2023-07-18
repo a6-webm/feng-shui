@@ -19,7 +19,10 @@ public class EdgePositionGizmo : MonoBehaviour
         if (edge == null) {
             edge = GetComponent<Edge>();
         } else {
-            transform.position = (edge.points()[0] + edge.points()[1]) / 2;
+            List<Vector3> points = edge.points();
+            if (points != null) {
+                transform.position = (points[0] + points[1]) / 2;
+            }
         }
     }
 }

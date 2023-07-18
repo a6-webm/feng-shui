@@ -9,7 +9,7 @@ public class Point : MonoBehaviour
     }
 
     private void OnDrawGizmos() {
-        Gizmos.color = Color.cyan;
+        Gizmos.color = Color.white;
         Gizmos.DrawSphere(transform.position, 1);
     }
 }

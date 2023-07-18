@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(QuadPositionGizmo))]
 public class Quad : MonoBehaviour
 {
     [SerializeField]
@@ -18,18 +19,21 @@ public class Quad : MonoBehaviour
     }
 
     public List<Vector3> points() {
-        return new List<Vector3> {pointA.p(), pointB.p(), pointC.p(), pointD.p()};
+        if (pointA != null && pointB != null && pointC != null && pointD != null) {
+            return new List<Vector3> {pointA.p(), pointB.p(), pointC.p(), pointD.p()};
+        }
+        return null;
     }
 
     private void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position, 0.5f);
         if (pointA != null && pointB != null && pointC != null && pointD != null) {
-            Gizmos.color = Color.red;
             // Gizmos.DrawLineStrip(new Vector3[] {pointA.p(), pointB.p(), pointC.p(), pointD.p()}, true);
             Gizmos.DrawLine(pointA.p(), transform.position);
             Gizmos.DrawLine(pointB.p(), transform.position);
             Gizmos.DrawLine(pointC.p(), transform.position);
             Gizmos.DrawLine(pointD.p(), transform.position);
-            Gizmos.DrawSphere(transform.position, 0.5f);
         }
     }
 }

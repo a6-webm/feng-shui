@@ -11,6 +11,7 @@ public class PlainWall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         edge = GetComponent<Edge>();
         if (edge == null) { return; }
 
@@ -18,6 +19,7 @@ public class PlainWall : MonoBehaviour
 
         lineRenderer.numCapVertices = 5;
         lineRenderer.positionCount = 2;
+        lineRenderer.alignment = LineAlignment.TransformZ;
         lineRenderer.SetPositions(edge.points().ToArray());
     }
 

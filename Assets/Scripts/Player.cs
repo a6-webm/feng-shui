@@ -9,9 +9,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     InputActionAsset inputActionAsset;
     [SerializeField]
-    float dragStrength = 1.0f;
+    float dragStrength = 100f;
     const float MAX_RAY_DIST = 1000f;
-    const float LINE_THICKNESS = 10f;
+    const float LINE_THICKNESS = 5f;
 
     [SerializeField]
     GameObject linePrefab;
@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
             if (Physics.Raycast(ray, out hit, MAX_RAY_DIST))
             {
                 Furniture furniture = hit.transform.GetComponent<Furniture>();
-                if (!furniture.locked) {
+                if (furniture != null && !furniture.locked) {
                     furniture.selected();
                     selected = hit.transform.gameObject;
                     mousePull.relGrabPos = hit.transform.InverseTransformPoint(hit.point);
@@ -62,9 +62,16 @@ public class Player : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(inputActionAsset.FindAction("Drag").ReadValue<Vector2>());
             Vector3 grabPos = selected.transform.TransformPoint(mousePull.relGrabPos);
             Vector3 proj_mouse = rayCastAtYLevel(ray, grabPos.y);
-            Vector3 force = (proj_mouse - grabPos).normalized * Mathf.Sqrt((proj_mouse - grabPos).magnitude) * dragStrength;
+            Vector3 force = (proj_mouse - grabPos).normalized * dragStrengthCurve((proj_mouse - grabPos).magnitude) * dragStrength;
             selected.GetComponent<Rigidbody>().AddForceAtPosition(force, grabPos);
         }
+    }
+
+    private float dragStrengthCurve(float x) {
+        if (x < 3) {
+            return Mathf.Sqrt(x);
+        }
+        return Mathf.Min(0.289f * x + 0.865f, 20);
     }
 
     void unselect() {

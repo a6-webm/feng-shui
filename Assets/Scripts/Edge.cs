@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
+[RequireComponent(typeof(EdgePositionGizmo))]
 public class Edge : MonoBehaviour
 {
     [SerializeField]
@@ -10,20 +10,23 @@ public class Edge : MonoBehaviour
     [SerializeField]
     Point pointB;
 
-    void Start()
-    {
+    private void Start() {
         transform.position = (pointA.p() + pointB.p()) / 2;
     }
 
     public List<Vector3> points() {
-        return new List<Vector3> {pointA.p(), pointB.p()};
+        if (pointA != null && pointB != null) {
+            return new List<Vector3> {pointA.p(), pointB.p()};
+        }
+        return null;
     }
 
     private void OnDrawGizmos() {
         if (pointA != null && pointB != null) {
-            Gizmos.color = Color.cyan;
+            Gizmos.color = Color.black;
             Gizmos.DrawLine(pointA.p(), pointB.p());
-            Gizmos.DrawSphere(transform.position, 0.5f);
         }
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawSphere(transform.position, 0.5f);
     }
 }
