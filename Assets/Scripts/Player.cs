@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     GameObject linePrefab;
-    Rigidbody selectedBody;
+    GameObject selected;
     MousePull mousePull = new MousePull();
 
     void Start()
@@ -30,35 +30,50 @@ public class Player : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(inputActionAsset.FindAction("Drag").ReadValue<Vector2>());
             if (Physics.Raycast(ray, out hit, MAX_RAY_DIST))
             {
-                selectedBody = hit.rigidbody;
-                mousePull.relGrabPos = hit.transform.InverseTransformPoint(hit.point);
-                GameObject line = Instantiate(linePrefab);
-                line.transform.SetParent(canvas.transform);
-                mousePull.line = line.GetComponent<RectTransform>();
+                Furniture furniture = hit.transform.GetComponent<Furniture>();
+                if (!furniture.locked) {
+                    furniture.selected();
+                    selected = hit.transform.gameObject;
+                    mousePull.relGrabPos = hit.transform.InverseTransformPoint(hit.point);
+                    GameObject line = Instantiate(linePrefab);
+                    line.transform.SetParent(canvas.transform);
+                    mousePull.line = line.GetComponent<RectTransform>();
+                }
             }
         };
         pressAction.canceled += ctx => {
             mousePull.clickDown = false;
-            selectedBody = null; // TODO once u add multiple fingers, you'll need to check that all fingers are off the screen
-            if (mousePull.line != null) {
-                Destroy(mousePull.line.gameObject);
-            }
+            unselect();
         };
     }
 
     void Update() {
-        if (selectedBody != null && mousePull.clickDown) {
-            resizeLine(inputActionAsset.FindAction("Drag").ReadValue<Vector2>(), mousePull.relGrabPos, mousePull.line);
+        if (selected != null && mousePull.clickDown) {
+            if (selected.GetComponent<Furniture>().locked) {
+                unselect();
+            } else {
+                resizeLine(inputActionAsset.FindAction("Drag").ReadValue<Vector2>(), mousePull.relGrabPos, mousePull.line);
+            }
         }
     }
 
     void FixedUpdate() {
-        if (selectedBody != null && mousePull.clickDown) {
+        if (selected != null && mousePull.clickDown) {
             Ray ray = Camera.main.ScreenPointToRay(inputActionAsset.FindAction("Drag").ReadValue<Vector2>());
-            Vector3 grabPos = selectedBody.transform.TransformPoint(mousePull.relGrabPos);
+            Vector3 grabPos = selected.transform.TransformPoint(mousePull.relGrabPos);
             Vector3 proj_mouse = rayCastAtYLevel(ray, grabPos.y);
             Vector3 force = (proj_mouse - grabPos).normalized * Mathf.Sqrt((proj_mouse - grabPos).magnitude) * dragStrength;
-            selectedBody.AddForceAtPosition(force, grabPos);
+            selected.GetComponent<Rigidbody>().AddForceAtPosition(force, grabPos);
+        }
+    }
+
+    void unselect() {
+        if (selected != null) {
+            selected.GetComponent<Furniture>().unselected();
+            selected = null;
+        }
+        if (mousePull.line != null) {
+                Destroy(mousePull.line.gameObject);
         }
     }
 
@@ -76,7 +91,7 @@ public class Player : MonoBehaviour
     }
 
     void resizeLine(Vector2 mouse, Vector3 relGrabPos, RectTransform rt) {
-        Vector3 grabPos = selectedBody.transform.TransformPoint(relGrabPos);
+        Vector3 grabPos = selected.transform.TransformPoint(relGrabPos);
         Vector2 grabScreen = Camera.main.WorldToScreenPoint(grabPos);
         grabScreen -= new Vector2(Screen.width/2, Screen.height/2);
         mouse -= new Vector2(Screen.width/2, Screen.height/2);
@@ -92,9 +107,9 @@ public class Player : MonoBehaviour
 
 class MousePull
 {
-    public RectTransform line { get; set; }
-    public bool clickDown { get; set; }
-    public Vector3 relGrabPos { get; set; }
+    public RectTransform line;
+    public bool clickDown;
+    public Vector3 relGrabPos;
     public MousePull() {
         clickDown = false;
         relGrabPos = Vector3.zero;
