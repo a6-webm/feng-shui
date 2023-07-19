@@ -22,6 +22,7 @@ public class Furniture : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        rigidbody.solverIterations = 24;
         rigidbody.isKinematic = true;
     }
 
