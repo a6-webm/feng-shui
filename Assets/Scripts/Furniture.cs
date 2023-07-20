@@ -7,12 +7,13 @@ using UnityEngine;
 public class Furniture : MonoBehaviour
 {
     public bool locked { get; private set; } = false;
+    private static event Action lockedEvent;
     Rigidbody rigidbody;
-    bool isSelected;
 
     [Serializable]
     public struct Restrictions {
         public bool dummyRestriction;
+        public float dummyRestrictionXValue;
     }
 
     [SerializeField]
@@ -30,25 +31,34 @@ public class Furniture : MonoBehaviour
     void FixedUpdate()
     {
         if (restrictions.dummyRestriction) {
-            if (transform.position.x < -1) {
-                locked = true;
+            if (transform.position.x < restrictions.dummyRestrictionXValue) {
+                lockSelf();
             } else {
-                locked = false;
+                unlockSelf();
             }
         } else {
-            locked = false;
+            unlockSelf();
         }
     }
 
-    public void selected() {
-        if (!locked) {
-            isSelected = true;
-            rigidbody.isKinematic = false;
-        }
+    private void lockSelf() {
+        locked = true;
+        lockedEvent?.Invoke();
+    }
+
+    private void unlockSelf() {
+        locked = false;
+    }
+
+    public bool selected(Action f) {
+        if (locked) { return false; }
+        lockedEvent += f;
+        rigidbody.isKinematic = false;
+        return true;
     }
 
     public void unselected() {
-        isSelected = false;
         rigidbody.isKinematic = true;
+        lockedEvent = null;
     }
 }

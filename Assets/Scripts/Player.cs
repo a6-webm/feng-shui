@@ -18,11 +18,13 @@ public class Player : MonoBehaviour
     GameObject selected;
     MousePull mousePull = new MousePull();
 
+    GameObject canvas;
+
     void Start()
     {
         inputActionAsset.Enable();
         InputAction pressAction = inputActionAsset.FindAction("Press");
-        GameObject canvas = GameObject.Find("Canvas");
+        canvas = GameObject.Find("Canvas");
         
         pressAction.started += ctx => {
             mousePull.clickDown = true;
@@ -31,34 +33,25 @@ public class Player : MonoBehaviour
             if (Physics.Raycast(ray, out hit, MAX_RAY_DIST))
             {
                 Furniture furniture = hit.transform.GetComponent<Furniture>();
-                if (furniture != null && !furniture.locked) {
-                    furniture.selected();
-                    selected = hit.transform.gameObject;
-                    mousePull.relGrabPos = hit.transform.InverseTransformPoint(hit.point);
-                    GameObject line = Instantiate(linePrefab);
-                    line.transform.SetParent(canvas.transform);
-                    mousePull.line = line.GetComponent<RectTransform>();
+                if (furniture != null) {
+                    selectFurn(furniture, hit);
                 }
             }
         };
         pressAction.canceled += ctx => {
-            mousePull.clickDown = false;
-            unselect();
+            mousePull.clickDown = false; // TODO do we need clickDown?
+            deselectFurn();
         };
     }
 
     void Update() {
-        if (selected != null && mousePull.clickDown) {
-            if (selected.GetComponent<Furniture>().locked) {
-                unselect();
-            } else {
-                resizeLine(inputActionAsset.FindAction("Drag").ReadValue<Vector2>(), mousePull.relGrabPos, mousePull.line);
-            }
+        if (selected != null) {
+            resizeLine(inputActionAsset.FindAction("Drag").ReadValue<Vector2>(), mousePull.relGrabPos, mousePull.line);
         }
     }
 
     void FixedUpdate() {
-        if (selected != null && mousePull.clickDown) {
+        if (selected != null) {
             Ray ray = Camera.main.ScreenPointToRay(inputActionAsset.FindAction("Drag").ReadValue<Vector2>());
             Vector3 grabPos = selected.transform.TransformPoint(mousePull.relGrabPos);
             Vector3 proj_mouse = rayCastAtYLevel(ray, grabPos.y);
@@ -74,7 +67,18 @@ public class Player : MonoBehaviour
         return Mathf.Min(0.289f * x + 0.865f, 20);
     }
 
-    void unselect() {
+    void selectFurn(Furniture furniture, RaycastHit hit) {
+        if (!furniture.selected(deselectFurn)) {
+            return;
+        }
+        selected = hit.transform.gameObject;
+        mousePull.relGrabPos = hit.transform.InverseTransformPoint(hit.point);
+        GameObject line = Instantiate(linePrefab);
+        line.transform.SetParent(canvas.transform);
+        mousePull.line = line.GetComponent<RectTransform>();
+    }
+
+    void deselectFurn() {
         if (selected != null) {
             selected.GetComponent<Furniture>().unselected();
             selected = null;

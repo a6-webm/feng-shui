@@ -1164,6 +1164,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 250670706523175881, guid: b3ae46f71fc707c4f9db0f308fb4ee0a,
+        type: 3}
+      propertyPath: restrictions.dummyRestriction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 250670706523175881, guid: b3ae46f71fc707c4f9db0f308fb4ee0a,
+        type: 3}
+      propertyPath: restrictions.dummyRestrictionXValue
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1694357761653243259, guid: b3ae46f71fc707c4f9db0f308fb4ee0a,
         type: 3}
       propertyPath: m_Mass
