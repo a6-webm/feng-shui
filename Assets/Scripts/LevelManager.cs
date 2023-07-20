@@ -8,6 +8,8 @@ public class LevelManager : MonoBehaviour
     private HashSet<Goal> goals = new HashSet<Goal>();
     private HashSet<Goal> metGoals = new HashSet<Goal>();
 
+    [SerializeField] public LevelData levelData;
+
     // Start is called before the first frame update
     void Start()
     {

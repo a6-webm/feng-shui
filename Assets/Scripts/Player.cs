@@ -8,42 +8,70 @@ public class Player : MonoBehaviour
 {
     [SerializeField] InputActionAsset inputActionAsset;
     [SerializeField] float dragStrength = 100f;
+    [SerializeField] float scrollSensitivity = 5f;
     const float MAX_RAY_DIST = 1000f;
     const float LINE_THICKNESS = 5f;
 
     [SerializeField] GameObject linePrefab;
     GameObject selected;
     MousePull mousePull = new MousePull();
+    bool dragging;
+    Vector2 prevMouse;
+    LevelData levelData;
 
     GameObject canvas;
 
     void Start()
     {
+        levelData = GameObject.Find("LevelManager").GetComponent<LevelManager>().levelData;
+        transform.position = levelData.playerStartPos;
         inputActionAsset.Enable();
         InputAction pressAction = inputActionAsset.FindAction("Press");
+        InputAction zoomInAction = inputActionAsset.FindAction("ZoomIn");
+        InputAction zoomOutAction = inputActionAsset.FindAction("ZoomOut");
         canvas = GameObject.Find("Canvas");
         
         pressAction.started += ctx => {
             mousePull.clickDown = true;
             RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(inputActionAsset.FindAction("Drag").ReadValue<Vector2>());
-            if (Physics.Raycast(ray, out hit, MAX_RAY_DIST))
-            {
-                Furniture furniture = hit.transform.GetComponent<Furniture>();
-                if (furniture != null) {
-                    selectFurn(furniture, hit);
-                }
+            Vector2 mouse = inputActionAsset.FindAction("Drag").ReadValue<Vector2>();
+            Ray ray = Camera.main.ScreenPointToRay(mouse);
+            bool didHit = Physics.Raycast(ray, out hit, MAX_RAY_DIST);
+            Furniture furniture = hit.transform?.GetComponent<Furniture>();
+            if (furniture != null) {
+                selectFurn(furniture, hit);
+            } else {
+                dragging = true;
+                prevMouse = mouse;
             }
         };
         pressAction.canceled += ctx => {
             mousePull.clickDown = false; // TODO do we need clickDown?
             deselectFurn();
+            dragging = false;
+        };
+        zoomInAction.performed += ctx => {
+            float newY = Mathf.Clamp(transform.position.y - scrollSensitivity, levelData.playerMinPos.y, levelData.playerMaxPos.y);
+            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+        };
+        zoomOutAction.performed += ctx => {
+            float newY = Mathf.Clamp(transform.position.y + scrollSensitivity, levelData.playerMinPos.y, levelData.playerMaxPos.y);
+            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
         };
     }
 
     void Update() {
+        Vector2 mouse = inputActionAsset.FindAction("Drag").ReadValue<Vector2>();
         if (selected != null) {
-            resizeLine(inputActionAsset.FindAction("Drag").ReadValue<Vector2>(), mousePull.relGrabPos, mousePull.line);
+            resizeLine(mouse, mousePull.relGrabPos, mousePull.line);
+        } else if (dragging) {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(mouse.x, mouse.y, transform.position.y));
+            Vector3 prevMousePos = Camera.main.ScreenToWorldPoint(new Vector3(prevMouse.x, prevMouse.y, transform.position.y));
+            Vector3 delta = mousePos - prevMousePos;
+            float newX = Mathf.Clamp(transform.position.x - delta.x, levelData.playerMinPos.x, levelData.playerMaxPos.x);
+            float newZ = Mathf.Clamp(transform.position.z - delta.z, levelData.playerMinPos.z, levelData.playerMaxPos.z);
+            transform.position = new Vector3(newX, transform.position.y, newZ);
+            prevMouse = mouse;
         }
     }
 
