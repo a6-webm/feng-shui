@@ -6,15 +6,12 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    InputActionAsset inputActionAsset;
-    [SerializeField]
-    float dragStrength = 100f;
+    [SerializeField] InputActionAsset inputActionAsset;
+    [SerializeField] float dragStrength = 100f;
     const float MAX_RAY_DIST = 1000f;
     const float LINE_THICKNESS = 5f;
 
-    [SerializeField]
-    GameObject linePrefab;
+    [SerializeField] GameObject linePrefab;
     GameObject selected;
     MousePull mousePull = new MousePull();
 

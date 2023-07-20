@@ -5,10 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(EdgePositionGizmo))]
 public class Edge : MonoBehaviour
 {
-    [SerializeField]
-    Point pointA;
-    [SerializeField]
-    Point pointB;
+    [SerializeField] Point pointA;
+    [SerializeField] Point pointB;
 
     private void Start() {
         transform.position = (pointA.p() + pointB.p()) / 2;

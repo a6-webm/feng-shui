@@ -5,14 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(QuadPositionGizmo))]
 public class Quad : MonoBehaviour
 {
-    [SerializeField]
-    Point pointA;
-    [SerializeField]
-    Point pointB;
-    [SerializeField]
-    Point pointC;
-    [SerializeField]
-    Point pointD;
+    [SerializeField] Point pointA;
+    [SerializeField] Point pointB;
+    [SerializeField] Point pointC;
+    [SerializeField] Point pointD;
 
     private void Start() {
         transform.position = (pointA.p() + pointB.p() + pointC.p() + pointD.p()) / 4;

@@ -16,8 +16,7 @@ public class Furniture : MonoBehaviour
         public float dummyRestrictionXValue;
     }
 
-    [SerializeField]
-    Restrictions restrictions;
+    [SerializeField] Restrictions restrictions;
     
     // Start is called before the first frame update
     void Start()
