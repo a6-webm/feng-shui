@@ -6,17 +6,15 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Furniture : MonoBehaviour
 {
-    public bool locked { get; private set; } = false;
-    private static event Action lockedEvent;
-    Rigidbody rigidbody;
-
     [Serializable]
     public struct Restrictions {
         public bool dummyRestriction;
         public float dummyRestrictionXValue;
     }
-
-    [SerializeField] Restrictions restrictions;
+    [SerializeField] public Restrictions restrictions;
+    public bool locked { get; private set; } = false;
+    private static event Action lockedEvent;
+    private Rigidbody rigidbody;
     
     // Start is called before the first frame update
     void Start()

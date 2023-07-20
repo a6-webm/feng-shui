@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    [SerializeField] public List<GameObject> validFurniture;
-    [SerializeField] public bool CareAboutOrientation = true;
-    [SerializeField] public float positionMargin = 1f;
-    [SerializeField] public float rotationMargin = 5f;
+    [SerializeField] List<GameObject> validFurniture;
+    [SerializeField] bool CareAboutOrientation = true;
+    [SerializeField] float positionMargin = 1f;
+    [SerializeField] float rotationMargin = 5f;
     private GameObject metFurn = null;
     private LevelManager levelManager;
-    MeshRenderer meshRenderer;
+    private MeshRenderer meshRenderer;
     private Material metMaterial;
     private Material unmetMaterial;
 

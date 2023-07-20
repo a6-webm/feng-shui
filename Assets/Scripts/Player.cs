@@ -9,17 +9,15 @@ public class Player : MonoBehaviour
     [SerializeField] InputActionAsset inputActionAsset;
     [SerializeField] float dragStrength = 100f;
     [SerializeField] float scrollSensitivity = 5f;
-    const float MAX_RAY_DIST = 1000f;
-    const float LINE_THICKNESS = 5f;
-
     [SerializeField] GameObject linePrefab;
-    GameObject selected;
-    MousePull mousePull = new MousePull();
-    bool dragging;
-    Vector2 prevMouse;
-    LevelData levelData;
-
-    GameObject canvas;
+    private const float MAX_RAY_DIST = 1000f;
+    private const float LINE_THICKNESS = 5f;
+    private GameObject selected;
+    private MousePull mousePull = new MousePull();
+    private bool dragging;
+    private Vector2 prevMouse;
+    private LevelData levelData;
+    private GameObject canvas;
 
     void Start()
     {

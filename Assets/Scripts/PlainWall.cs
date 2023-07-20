@@ -5,8 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Edge), typeof(LineRenderer))]
 public class PlainWall : MonoBehaviour
 {
-    Edge edge;
-    LineRenderer lineRenderer;
+    private Edge edge;
+    private LineRenderer lineRenderer;
 
     // Start is called before the first frame update
     void Start()
