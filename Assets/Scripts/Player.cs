@@ -78,7 +78,8 @@ public class Player : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(inputActionAsset.FindAction("Drag").ReadValue<Vector2>());
             Vector3 grabPos = selected.transform.TransformPoint(mousePull.relGrabPos);
             Vector3 proj_mouse = rayCastAtYLevel(ray, grabPos.y);
-            Vector3 force = (proj_mouse - grabPos).normalized * dragStrengthCurve((proj_mouse - grabPos).magnitude) * dragStrength;
+            Vector3 diffVec = proj_mouse - grabPos;
+            Vector3 force = diffVec.normalized * dragStrengthCurve(diffVec.magnitude) * dragStrength;
             selected.GetComponent<Rigidbody>().AddForceAtPosition(force, grabPos);
         }
     }
