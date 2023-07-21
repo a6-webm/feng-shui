@@ -160,8 +160,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37f1675b6b57af40ae34e0ce57a8109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsClockwise: 1
-  makeConvex: 1
+  PointsClockwise: 1
+  MakeConvex: 1
 --- !u!114 &166311279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbc5522c89a83824ba394e98b1dcae10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _points:
+  Points:
   - {fileID: 872634680}
   - {fileID: 1718318048}
   - {fileID: 401323049}
@@ -237,11 +237,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe99837c593994a4184a171e44d7d293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  validFurniture:
+  ValidFurniture:
   - {fileID: 1533096466}
   CareAboutOrientation: 1
-  positionMargin: 0.5
-  rotationMargin: 10
+  PositionMargin: 1
+  RotationMargin: 5
 --- !u!33 &194434033
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -338,8 +338,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37f1675b6b57af40ae34e0ce57a8109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsClockwise: 1
-  makeConvex: 1
+  PointsClockwise: 1
+  MakeConvex: 1
 --- !u!114 &255787406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbc5522c89a83824ba394e98b1dcae10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _points:
+  Points:
   - {fileID: 984794686}
   - {fileID: 1749660810}
   - {fileID: 1874751534}
@@ -461,11 +461,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe99837c593994a4184a171e44d7d293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  validFurniture:
+  ValidFurniture:
   - {fileID: 160930461}
   CareAboutOrientation: 0
-  positionMargin: 0.5
-  rotationMargin: 10
+  PositionMargin: 1
+  RotationMargin: 5
 --- !u!33 &290181942
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -676,8 +676,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37f1675b6b57af40ae34e0ce57a8109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsClockwise: 1
-  makeConvex: 1
+  PointsClockwise: 1
+  MakeConvex: 1
 --- !u!114 &390129470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -690,7 +690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbc5522c89a83824ba394e98b1dcae10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _points:
+  Points:
   - {fileID: 2078604866}
   - {fileID: 1249273879}
   - {fileID: 1718318048}
@@ -797,8 +797,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37f1675b6b57af40ae34e0ce57a8109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsClockwise: 1
-  makeConvex: 1
+  PointsClockwise: 1
+  MakeConvex: 1
 --- !u!114 &427870312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,11 +811,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbc5522c89a83824ba394e98b1dcae10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _points:
+  Points:
+  - {fileID: 984794686}
   - {fileID: 1132277670}
   - {fileID: 401323049}
   - {fileID: 1749660810}
-  - {fileID: 984794686}
 --- !u!114 &427870313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -989,8 +989,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 284caa7dd31242740847204274263e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {fileID: 872634680}
-  pointB: {fileID: 663454482}
+  PointA: {fileID: 663454482}
+  PointB: {fileID: 872634680}
 --- !u!114 &561119154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1297,8 +1297,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 284caa7dd31242740847204274263e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {fileID: 2078604866}
-  pointB: {fileID: 663454482}
+  PointA: {fileID: 2078604866}
+  PointB: {fileID: 663454482}
 --- !u!114 &678922324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1357,8 +1357,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37f1675b6b57af40ae34e0ce57a8109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsClockwise: 1
-  makeConvex: 1
+  PointsClockwise: 1
+  MakeConvex: 1
 --- !u!114 &683503261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1371,7 +1371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbc5522c89a83824ba394e98b1dcae10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _points:
+  Points:
   - {fileID: 837046242}
   - {fileID: 1874751534}
   - {fileID: 1249273879}
@@ -2140,8 +2140,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 284caa7dd31242740847204274263e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {fileID: 1096439309}
-  pointB: {fileID: 837046242}
+  PointA: {fileID: 1096439309}
+  PointB: {fileID: 837046242}
 --- !u!114 &1134770213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2359,8 +2359,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 284caa7dd31242740847204274263e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {fileID: 1132277670}
-  pointB: {fileID: 984794686}
+  PointA: {fileID: 1132277670}
+  PointB: {fileID: 984794686}
 --- !u!114 &1305735047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2534,8 +2534,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 284caa7dd31242740847204274263e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {fileID: 1096439309}
-  pointB: {fileID: 984794686}
+  PointA: {fileID: 984794686}
+  PointB: {fileID: 1096439309}
 --- !u!114 &1509087721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2709,8 +2709,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 284caa7dd31242740847204274263e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {fileID: 872634680}
-  pointB: {fileID: 1132277670}
+  PointA: {fileID: 872634680}
+  PointB: {fileID: 1132277670}
 --- !u!114 &1532883804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2795,11 +2795,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c892ac6457582514a9d43c76941f1f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputActionAsset: {fileID: -944628639613478452, guid: db8d5eb9e369a19408d4cfb36011ab6d,
+  InputActionAsset: {fileID: -944628639613478452, guid: db8d5eb9e369a19408d4cfb36011ab6d,
     type: 3}
-  dragStrength: 200
-  scrollSensitivity: 20
-  linePrefab: {fileID: 7139140112998874751, guid: feb03bd2df255d446b7b37dbd608a74e,
+  DragStrength: 200
+  ScrollSensitivity: 20
+  LinePrefab: {fileID: 7139140112998874751, guid: feb03bd2df255d446b7b37dbd608a74e,
     type: 3}
 --- !u!4 &1617287485
 Transform:
@@ -3197,8 +3197,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 284caa7dd31242740847204274263e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {fileID: 2078604866}
-  pointB: {fileID: 837046242}
+  PointA: {fileID: 837046242}
+  PointB: {fileID: 2078604866}
 --- !u!114 &2010170434
 MonoBehaviour:
   m_ObjectHideFlags: 0

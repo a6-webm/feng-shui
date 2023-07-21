@@ -5,8 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(ConvexShape))]
 public class ConvexCollider : MonoBehaviour
 {
-    [SerializeField] bool pointsClockwise = true;
-    [SerializeField] bool makeConvex = true;
+    [SerializeField] bool PointsClockwise = true;
+    [SerializeField] bool MakeConvex = true;
 
     void Start()
     {
@@ -33,33 +33,33 @@ public class ConvexCollider : MonoBehaviour
             int v1 = 0;
             int v2 = pI;
             int v3 = pI + 1;
-            addTriangle(v1, v2, v3, pointsClockwise, ref triangles);
+            addTriangle(v1, v2, v3, PointsClockwise, ref triangles);
         }
         // top face triangles
         for (int pI = points.Count + 1; pI < (points.Count*2) - 1; pI++) {
             int v1 = points.Count;
             int v2 = pI + 1;
             int v3 = pI;
-            addTriangle(v1, v2, v3, pointsClockwise, ref triangles);
+            addTriangle(v1, v2, v3, PointsClockwise, ref triangles);
         }
         // trunk triangles
         for (int pI = 0; pI < points.Count - 1; pI++) {
             int v1 = pI;
             int v2 = pI + points.Count;
             int v3 = pI + points.Count + 1;
-            addTriangle(v1, v2, v3, pointsClockwise, ref triangles);
+            addTriangle(v1, v2, v3, PointsClockwise, ref triangles);
             v1 = pI;
             v2 = pI + points.Count + 1;
             v3 = pI + 1;
-            addTriangle(v1, v2, v3, pointsClockwise, ref triangles);
+            addTriangle(v1, v2, v3, PointsClockwise, ref triangles);
         }
-        addTriangle(points.Count - 1, points.Count*2 - 1, points.Count, pointsClockwise, ref triangles);
-        addTriangle(points.Count, points.Count, 0, pointsClockwise, ref triangles);
+        addTriangle(points.Count - 1, points.Count*2 - 1, points.Count, PointsClockwise, ref triangles);
+        addTriangle(points.Count, points.Count, 0, PointsClockwise, ref triangles);
 
         mesh.triangles = triangles.ToArray();
 
         MeshCollider meshCollider = gameObject.AddComponent<MeshCollider>();
-        meshCollider.convex = makeConvex;
+        meshCollider.convex = MakeConvex;
         meshCollider.isTrigger = false;
         meshCollider.sharedMesh = mesh;
         gameObject.layer = 2;

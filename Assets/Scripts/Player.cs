@@ -6,81 +6,81 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] InputActionAsset inputActionAsset;
-    [SerializeField] float dragStrength = 100f;
-    [SerializeField] float scrollSensitivity = 5f;
-    [SerializeField] GameObject linePrefab;
+    [SerializeField] InputActionAsset InputActionAsset;
+    [SerializeField] float DragStrength = 200f;
+    [SerializeField] float ScrollSensitivity = 20f;
+    [SerializeField] GameObject LinePrefab;
     private const float MAX_RAY_DIST = 1000f;
     private const float LINE_THICKNESS = 5f;
-    private GameObject selected;
-    private MousePull mousePull = new MousePull();
-    private bool dragging;
-    private Vector2 prevMouse;
-    private LevelData levelData;
-    private GameObject canvas;
+    private GameObject _selected;
+    private MousePull _mousePull = new MousePull();
+    private bool _dragging;
+    private Vector2 _prevMouse;
+    private LevelData _levelData;
+    private GameObject _canvas;
 
     void Start()
     {
-        levelData = GameObject.Find("LevelManager").GetComponent<LevelManager>().levelData;
-        transform.position = levelData.playerStartPos;
-        inputActionAsset.Enable();
-        InputAction pressAction = inputActionAsset.FindAction("Press");
-        InputAction zoomInAction = inputActionAsset.FindAction("ZoomIn");
-        InputAction zoomOutAction = inputActionAsset.FindAction("ZoomOut");
-        canvas = GameObject.Find("Canvas");
+        _levelData = GameObject.Find("LevelManager").GetComponent<LevelManager>().levelData;
+        transform.position = _levelData.playerStartPos;
+        InputActionAsset.Enable();
+        InputAction pressAction = InputActionAsset.FindAction("Press");
+        InputAction zoomInAction = InputActionAsset.FindAction("ZoomIn");
+        InputAction zoomOutAction = InputActionAsset.FindAction("ZoomOut");
+        _canvas = GameObject.Find("Canvas");
         
         pressAction.started += ctx => {
-            mousePull.clickDown = true;
+            _mousePull.clickDown = true;
             RaycastHit hit;
-            Vector2 mouse = inputActionAsset.FindAction("Drag").ReadValue<Vector2>();
+            Vector2 mouse = InputActionAsset.FindAction("Drag").ReadValue<Vector2>();
             Ray ray = Camera.main.ScreenPointToRay(mouse);
             bool didHit = Physics.Raycast(ray, out hit, MAX_RAY_DIST);
             Furniture furniture = hit.transform?.GetComponent<Furniture>();
             if (furniture != null) {
                 selectFurn(furniture, hit);
             } else {
-                dragging = true;
-                prevMouse = mouse;
+                _dragging = true;
+                _prevMouse = mouse;
             }
         };
         pressAction.canceled += ctx => {
-            mousePull.clickDown = false; // TODO do we need clickDown?
+            _mousePull.clickDown = false; // TODO do we need clickDown?
             deselectFurn();
-            dragging = false;
+            _dragging = false;
         };
         zoomInAction.performed += ctx => {
-            float newY = Mathf.Clamp(transform.position.y - scrollSensitivity, levelData.playerMinPos.y, levelData.playerMaxPos.y);
+            float newY = Mathf.Clamp(transform.position.y - ScrollSensitivity, _levelData.playerMinPos.y, _levelData.playerMaxPos.y);
             transform.position = new Vector3(transform.position.x, newY, transform.position.z);
         };
         zoomOutAction.performed += ctx => {
-            float newY = Mathf.Clamp(transform.position.y + scrollSensitivity, levelData.playerMinPos.y, levelData.playerMaxPos.y);
+            float newY = Mathf.Clamp(transform.position.y + ScrollSensitivity, _levelData.playerMinPos.y, _levelData.playerMaxPos.y);
             transform.position = new Vector3(transform.position.x, newY, transform.position.z);
         };
     }
 
     void Update() {
-        Vector2 mouse = inputActionAsset.FindAction("Drag").ReadValue<Vector2>();
-        if (selected != null) {
-            resizeLine(mouse, mousePull.relGrabPos, mousePull.line);
-        } else if (dragging) {
+        Vector2 mouse = InputActionAsset.FindAction("Drag").ReadValue<Vector2>();
+        if (_selected != null) {
+            resizeLine(mouse, _mousePull.relGrabPos, _mousePull.line);
+        } else if (_dragging) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(mouse.x, mouse.y, transform.position.y));
-            Vector3 prevMousePos = Camera.main.ScreenToWorldPoint(new Vector3(prevMouse.x, prevMouse.y, transform.position.y));
+            Vector3 prevMousePos = Camera.main.ScreenToWorldPoint(new Vector3(_prevMouse.x, _prevMouse.y, transform.position.y));
             Vector3 delta = mousePos - prevMousePos;
-            float newX = Mathf.Clamp(transform.position.x - delta.x, levelData.playerMinPos.x, levelData.playerMaxPos.x);
-            float newZ = Mathf.Clamp(transform.position.z - delta.z, levelData.playerMinPos.z, levelData.playerMaxPos.z);
+            float newX = Mathf.Clamp(transform.position.x - delta.x, _levelData.playerMinPos.x, _levelData.playerMaxPos.x);
+            float newZ = Mathf.Clamp(transform.position.z - delta.z, _levelData.playerMinPos.z, _levelData.playerMaxPos.z);
             transform.position = new Vector3(newX, transform.position.y, newZ);
-            prevMouse = mouse;
+            _prevMouse = mouse;
         }
     }
 
     void FixedUpdate() {
-        if (selected != null) {
-            Ray ray = Camera.main.ScreenPointToRay(inputActionAsset.FindAction("Drag").ReadValue<Vector2>());
-            Vector3 grabPos = selected.transform.TransformPoint(mousePull.relGrabPos);
+        if (_selected != null) {
+            Ray ray = Camera.main.ScreenPointToRay(InputActionAsset.FindAction("Drag").ReadValue<Vector2>());
+            Vector3 grabPos = _selected.transform.TransformPoint(_mousePull.relGrabPos);
             Vector3 proj_mouse = rayCastAtYLevel(ray, grabPos.y);
             Vector3 diffVec = proj_mouse - grabPos;
-            Vector3 force = diffVec.normalized * dragStrengthCurve(diffVec.magnitude) * dragStrength;
-            selected.GetComponent<Rigidbody>().AddForceAtPosition(force, grabPos);
+            Vector3 force = diffVec.normalized * dragStrengthCurve(diffVec.magnitude) * DragStrength;
+            _selected.GetComponent<Rigidbody>().AddForceAtPosition(force, grabPos);
         }
     }
 
@@ -95,20 +95,20 @@ public class Player : MonoBehaviour
         if (!furniture.selected(deselectFurn)) {
             return;
         }
-        selected = hit.transform.gameObject;
-        mousePull.relGrabPos = hit.transform.InverseTransformPoint(hit.point);
-        GameObject line = Instantiate(linePrefab);
-        line.transform.SetParent(canvas.transform);
-        mousePull.line = line.GetComponent<RectTransform>();
+        _selected = hit.transform.gameObject;
+        _mousePull.relGrabPos = hit.transform.InverseTransformPoint(hit.point);
+        GameObject line = Instantiate(LinePrefab);
+        line.transform.SetParent(_canvas.transform);
+        _mousePull.line = line.GetComponent<RectTransform>();
     }
 
     void deselectFurn() {
-        if (selected != null) {
-            selected.GetComponent<Furniture>().unselected();
-            selected = null;
+        if (_selected != null) {
+            _selected.GetComponent<Furniture>().unselected();
+            _selected = null;
         }
-        if (mousePull.line != null) {
-                Destroy(mousePull.line.gameObject);
+        if (_mousePull.line != null) {
+                Destroy(_mousePull.line.gameObject);
         }
     }
 
@@ -126,7 +126,7 @@ public class Player : MonoBehaviour
     }
 
     void resizeLine(Vector2 mouse, Vector3 relGrabPos, RectTransform rt) {
-        Vector3 grabPos = selected.transform.TransformPoint(relGrabPos);
+        Vector3 grabPos = _selected.transform.TransformPoint(relGrabPos);
         Vector2 grabScreen = Camera.main.WorldToScreenPoint(grabPos);
         grabScreen -= new Vector2(Screen.width/2, Screen.height/2);
         mouse -= new Vector2(Screen.width/2, Screen.height/2);

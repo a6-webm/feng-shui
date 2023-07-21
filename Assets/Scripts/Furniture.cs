@@ -7,28 +7,28 @@ using UnityEngine;
 public class Furniture : MonoBehaviour
 {
     [Serializable]
-    public struct Restrictions {
+    struct Restricters {
         public bool dummyRestriction;
         public float dummyRestrictionXValue;
     }
-    [SerializeField] public Restrictions restrictions;
-    public bool locked { get; private set; } = false;
-    private static event Action lockedEvent;
-    private Rigidbody rigidbody;
+    [SerializeField] Restricters Restrictions;
+    public bool Locked { get; private set; } = false;
+    private static event Action _lockedEvent;
+    private Rigidbody _rigidbody;
     
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
-        rigidbody.solverIterations = 24;
-        rigidbody.isKinematic = true;
+        _rigidbody = GetComponent<Rigidbody>();
+        _rigidbody.solverIterations = 24;
+        _rigidbody.isKinematic = true;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (restrictions.dummyRestriction) {
-            if (transform.position.x < restrictions.dummyRestrictionXValue) {
+        if (Restrictions.dummyRestriction) {
+            if (transform.position.x < Restrictions.dummyRestrictionXValue) {
                 lockSelf();
             } else {
                 unlockSelf();
@@ -39,23 +39,23 @@ public class Furniture : MonoBehaviour
     }
 
     private void lockSelf() {
-        locked = true;
-        lockedEvent?.Invoke();
+        Locked = true;
+        _lockedEvent?.Invoke();
     }
 
     private void unlockSelf() {
-        locked = false;
+        Locked = false;
     }
 
     public bool selected(Action f) {
-        if (locked) { return false; }
-        lockedEvent += f;
-        rigidbody.isKinematic = false;
+        if (Locked) { return false; }
+        _lockedEvent += f;
+        _rigidbody.isKinematic = false;
         return true;
     }
 
     public void unselected() {
-        rigidbody.isKinematic = true;
-        lockedEvent = null;
+        _rigidbody.isKinematic = true;
+        _lockedEvent = null;
     }
 }

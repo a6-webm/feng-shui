@@ -4,35 +4,35 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    [SerializeField] List<GameObject> validFurniture;
+    [SerializeField] List<GameObject> ValidFurniture;
     [SerializeField] bool CareAboutOrientation = true;
-    [SerializeField] float positionMargin = 1f;
-    [SerializeField] float rotationMargin = 5f;
-    private GameObject metFurn = null;
-    private LevelManager levelManager;
-    private MeshRenderer meshRenderer;
-    private Material metMaterial;
-    private Material unmetMaterial;
+    [SerializeField] float PositionMargin = 1f;
+    [SerializeField] float RotationMargin = 5f;
+    private GameObject _metFurn = null;
+    private LevelManager _levelManager;
+    private MeshRenderer _meshRenderer;
+    private Material _metMaterial;
+    private Material _unmetMaterial;
 
     void Start()
     {
-        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-        meshRenderer = GetComponent<MeshRenderer>();
-        metMaterial = Resources.Load<Material>("metGoal");
-        unmetMaterial = Resources.Load<Material>("unmetGoal");
-        meshRenderer.material = unmetMaterial;
+        _levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        _meshRenderer = GetComponent<MeshRenderer>();
+        _metMaterial = Resources.Load<Material>("metGoal");
+        _unmetMaterial = Resources.Load<Material>("unmetGoal");
+        _meshRenderer.material = _unmetMaterial;
     }
 
     void FixedUpdate() {
-        if (metFurn == null) {
-            foreach (GameObject furn in validFurniture) {
+        if (_metFurn == null) {
+            foreach (GameObject furn in ValidFurniture) {
                 if (isMeetingGoal(furn.transform)) {
                     meetGoal(furn);
                     break;
                 }
             }
         } else {
-            if (!isMeetingGoal(metFurn.transform)) {
+            if (!isMeetingGoal(_metFurn.transform)) {
                 unmeetGoal();
             }
         }
@@ -43,19 +43,19 @@ public class Goal : MonoBehaviour
         Vector3 pos = transform.position;
         fPos.y = 0;
         pos.y = 0;
-        return Vector3.Distance(fPos, pos) <= positionMargin
-                && (!CareAboutOrientation || Quaternion.Angle(f.rotation, transform.rotation) <= rotationMargin);
+        return Vector3.Distance(fPos, pos) <= PositionMargin
+                && (!CareAboutOrientation || Quaternion.Angle(f.rotation, transform.rotation) <= RotationMargin);
     }
 
     void meetGoal(GameObject furn) {
-        metFurn = furn;
-        levelManager.goalMet(this);
-        meshRenderer.material = metMaterial;
+        _metFurn = furn;
+        _levelManager.goalMet(this);
+        _meshRenderer.material = _metMaterial;
     }
 
     void unmeetGoal() {
-        metFurn = null;
-        levelManager.goalUnmet(this);
-        meshRenderer.material = unmetMaterial;
+        _metFurn = null;
+        _levelManager.goalUnmet(this);
+        _meshRenderer.material = _unmetMaterial;
     }
 }

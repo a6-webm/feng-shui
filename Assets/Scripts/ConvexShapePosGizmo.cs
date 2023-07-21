@@ -6,7 +6,7 @@ using UnityEngine;
 [ExecuteAlways]
 public class ConvexShapePosGizmo : MonoBehaviour
 {
-    ConvexShape convexShape;
+    private ConvexShape _convexShape;
 
     void Start() {
         if (Application.isPlaying) {
@@ -16,10 +16,10 @@ public class ConvexShapePosGizmo : MonoBehaviour
 
     void Update()
     {
-        if (convexShape == null) {
-            convexShape = GetComponent<ConvexShape>();
+        if (_convexShape == null) {
+            _convexShape = GetComponent<ConvexShape>();
         } else {
-            List<Vector3> points = convexShape.points();
+            List<Vector3> points = _convexShape.points();
             if (points.Count < 3) { return; }
             Vector3 sumPos = new Vector3(0,0,0);
             points.ForEach(p => sumPos += p);

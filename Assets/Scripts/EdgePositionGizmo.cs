@@ -6,7 +6,7 @@ using UnityEngine;
 [ExecuteAlways]
 public class EdgePositionGizmo : MonoBehaviour
 {
-    Edge edge;
+    private Edge _edge;
 
     void Start() {
         if (Application.isPlaying) {
@@ -16,10 +16,10 @@ public class EdgePositionGizmo : MonoBehaviour
 
     void Update()
     {
-        if (edge == null) {
-            edge = GetComponent<Edge>();
+        if (_edge == null) {
+            _edge = GetComponent<Edge>();
         } else {
-            List<Vector3> points = edge.points();
+            List<Vector3> points = _edge.points();
             if (points != null) {
                 transform.position = (points[0] + points[1]) / 2;
             }
