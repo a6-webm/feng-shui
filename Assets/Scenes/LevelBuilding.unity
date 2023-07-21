@@ -1570,15 +1570,15 @@ Camera:
   m_FOVAxisMode: 0
   m_Iso: 200
   m_ShutterSpeed: 0.005
-  m_Aperture: 16
+  m_Aperture: 24.41
   m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
+  m_FocalLength: 29.926373
+  m_BladeCount: 11
+  m_Curvature: {x: 7.05, y: 11}
   m_BarrelClipping: 0.25
-  m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
+  m_Anamorphism: -0.02
+  m_SensorSize: {x: 36.35, y: 58.1}
+  m_LensShift: {x: 0.3, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -1587,7 +1587,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 20
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2682,7 +2682,7 @@ MonoBehaviour:
   inputActionAsset: {fileID: -944628639613478452, guid: db8d5eb9e369a19408d4cfb36011ab6d,
     type: 3}
   dragStrength: 200
-  scrollSensitivity: 5
+  scrollSensitivity: 20
   linePrefab: {fileID: 7139140112998874751, guid: feb03bd2df255d446b7b37dbd608a74e,
     type: 3}
 --- !u!4 &1617287485
@@ -2693,7 +2693,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617287483}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.43, y: 29.8, z: -42.6}
+  m_LocalPosition: {x: 16.8, y: 400, z: -28.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
