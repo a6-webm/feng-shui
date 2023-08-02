@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/LevelSelect.uss?fileID=7433441132597879392&amp;guid=b516a231e4d74d252bc0bfecb630602e&amp;type=3#LevelSelect" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:Label tabindex="-1" text="LEVEL SELECT" display-tooltip-when-elided="true" style="font-size: 50px; -unity-text-align: upper-center;" />
+        <ui:ScrollView name="LevelScroll" style="flex-wrap: wrap; flex-direction: row;" />
+    </ui:VisualElement>
+</ui:UXML>

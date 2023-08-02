@@ -1,0 +1,9 @@
+Button {
+    width: 50px;
+    height: 50px;
+}
+
+#LevelScroll .unity-scroll-view__content-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
