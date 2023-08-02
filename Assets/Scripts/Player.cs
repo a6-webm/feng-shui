@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        _levelData = GameObject.Find("LevelManager").GetComponent<LevelManager>().levelData;
+        _levelData = GameObject.Find("LevelManager").GetComponent<LevelManager>().LevelData;
         transform.position = _levelData.playerStartPos;
         InputActionAsset.Enable();
         InputAction pressAction = InputActionAsset.FindAction("Press");

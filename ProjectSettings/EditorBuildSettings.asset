@@ -4,7 +4,22 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/LevelSelect.unity
+    guid: 7354e0cdc3820c2e4adab56510350691
+  - enabled: 1
+    path: Assets/Scenes/test/LevelBuilding.unity
+    guid: c850ee8c3b14cc8459e7e186857cf567
+  - enabled: 1
+    path: Assets/Scenes/1/Level1.unity
+    guid: ca49e5af94e6ac6bc871004470c1fea8
+  - enabled: 1
+    path: Assets/Scenes/2/Level2.unity
+    guid: 16a3027e21c02fceb9d3613210e7a938
+  - enabled: 1
+    path: Assets/Scenes/3/3.unity
+    guid: 04f279cf328d02471860873df1c4c5d9
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 6f60f75da9e5d83458da55057cd23131,
       type: 2}

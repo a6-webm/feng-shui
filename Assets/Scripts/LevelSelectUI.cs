@@ -23,9 +23,7 @@ public class LevelSelectUI : MonoBehaviour
             ScrollView sv = root.Q<ScrollView>("LevelScroll");
             Button button = new Button();
             button.text = d.Name;
-            button.clicked += () => {
-                SceneManager.LoadScene(scenePath, LoadSceneMode.Single);
-            };
+            button.clicked += () => { SceneManager.LoadScene(scenePath); };
             sv.Add(button);
         }
     }

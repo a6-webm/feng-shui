@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Level.uss?fileID=7433441132597879392&amp;guid=0f77ac75b505f6b429c55dbc8a701dfb&amp;type=3#Level" />
+    <ui:VisualElement name="during-div" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); flex-direction: row; flex-shrink: 0; flex-basis: 0;">
+        <ui:Button text="Back" display-tooltip-when-elided="true" name="back" style="width: auto; height: 50px;" />
+        <ui:Button text="Restart" display-tooltip-when-elided="true" name="restart" style="width: auto; height: 50px;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="win-div" style="flex-basis: 100%; justify-content: center; align-items: center;">
+        <ui:VisualElement style="align-items: center;">
+            <ui:Label tabindex="-1" text="YOU WON!!!" display-tooltip-when-elided="true" style="font-size: 50px;" />
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                <ui:Button text="Back" display-tooltip-when-elided="true" name="back" style="font-size: 30px;" />
+                <ui:Button text="Restart" display-tooltip-when-elided="true" name="restart" style="font-size: 30px;" />
+                <ui:Button text="Next" display-tooltip-when-elided="true" name="next" style="font-size: 30px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

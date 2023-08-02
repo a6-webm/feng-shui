@@ -395,6 +395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 286596863}
   - component: {fileID: 286596862}
+  - component: {fileID: 286596864}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -414,7 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b0ac16fac306e40a22f70f481917c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelData: {fileID: 11400000, guid: 23e5a6961a724594dbfe18109e0f6c18, type: 2}
+  LevelData: {fileID: 11400000, guid: 23e5a6961a724594dbfe18109e0f6c18, type: 2}
 --- !u!4 &286596863
 Transform:
   m_ObjectHideFlags: 0
@@ -430,6 +431,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &286596864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286596861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 8f68ac1b8c56805dab6474a7c77c5873, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 683df27258c40c84dac2c7ea9a0f80cf,
+    type: 3}
+  m_SortingOrder: 0
 --- !u!1 &290181940
 GameObject:
   m_ObjectHideFlags: 0
