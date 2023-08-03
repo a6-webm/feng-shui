@@ -8,7 +8,9 @@ public class ConvexCollider : MonoBehaviour
     [SerializeField] bool PointsClockwise = true;
     [SerializeField] bool MakeConvex = true;
 
-    void Start()
+    public Mesh mesh {get; private set;}
+
+    void Awake()
     {
         ConvexShape convexShape = GetComponent<ConvexShape>();
         List<Vector3> points = convexShape.points();
@@ -16,7 +18,7 @@ public class ConvexCollider : MonoBehaviour
             Debug.LogError("ConvexCollider for '" + gameObject.name + "' has less than 3 points");
             return;
         }
-        Mesh mesh = new Mesh();
+        mesh = new Mesh();
 
         Vector3[] vertices = new Vector3[2 * points.Count];
         for (int i = 0; i < points.Count; i++) {
@@ -54,7 +56,7 @@ public class ConvexCollider : MonoBehaviour
             addTriangle(v1, v2, v3, PointsClockwise, ref triangles);
         }
         addTriangle(points.Count - 1, points.Count*2 - 1, points.Count, PointsClockwise, ref triangles);
-        addTriangle(points.Count, points.Count, 0, PointsClockwise, ref triangles);
+        addTriangle(points.Count - 1, points.Count, 0, PointsClockwise, ref triangles);
 
         mesh.triangles = triangles.ToArray();
 

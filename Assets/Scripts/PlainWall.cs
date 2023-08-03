@@ -19,4 +19,14 @@ public class PlainWall : MonoBehaviour
         _lineRenderer.alignment = LineAlignment.TransformZ;
         _lineRenderer.SetPositions(_edge.points().ToArray());
     }
+
+    private void OnDrawGizmos() {
+        List<Vector3> points = GetComponent<Edge>().points();
+        if (points != null) {
+            Gizmos.color = Color.black;
+            Gizmos.DrawLine(points[0], points[1]);
+        }
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position, 0.5f);
+    }
 }

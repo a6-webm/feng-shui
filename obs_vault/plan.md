@@ -58,3 +58,5 @@ game mechanics:
 	- maybe while in a social circle, furniture automatically points towards the centre?
 - lighting
 - mirrors
+- Doors
+	- can be interesting to maneuvre furniture around them

@@ -18,13 +18,4 @@ public class Edge : MonoBehaviour
         }
         return null;
     }
-
-    private void OnDrawGizmos() {
-        if (PointA != null && PointB != null) {
-            Gizmos.color = Color.black;
-            Gizmos.DrawLine(PointA.p(), PointB.p());
-        }
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawSphere(transform.position, 0.5f);
-    }
 }
