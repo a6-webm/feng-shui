@@ -12,6 +12,7 @@ public class ConvexCollider : MonoBehaviour
 
     void Awake()
     {
+        float box_height = 80f;
         ConvexShape convexShape = GetComponent<ConvexShape>();
         List<Vector3> points = convexShape.points();
         if (points.Count < 3) {
@@ -22,14 +23,14 @@ public class ConvexCollider : MonoBehaviour
 
         Vector3[] vertices = new Vector3[2 * points.Count];
         for (int i = 0; i < points.Count; i++) {
-            vertices[i] = points[i] + new Vector3(0, -40, 0) - transform.position;
+            vertices[i] = points[i] + new Vector3(0, -box_height/2, 0) - transform.position;
         }
         for (int i = 0; i < points.Count; i++) {
-            vertices[points.Count + i] = points[i] + new Vector3(0, 40, 0) - transform.position;
+            vertices[points.Count + i] = points[i] + new Vector3(0, box_height/2, 0) - transform.position;
         }
         mesh.vertices = vertices;
 
-        List<int> triangles = new List<int>();
+        List<int> triangles = new();
         // bottom face triangles
         for (int pI = 1; pI < points.Count - 1; pI++) {
             int v1 = 0;
