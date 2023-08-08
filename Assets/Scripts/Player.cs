@@ -22,40 +22,58 @@ public class Player : MonoBehaviour
     void Start()
     {
         _levelData = GameObject.Find("LevelManager").GetComponent<LevelManager>().LevelData;
+        _canvas = GameObject.Find("Canvas");
         transform.position = _levelData.playerStartPos;
+
         InputActionAsset.Enable();
         InputAction pressAction = InputActionAsset.FindAction("Press");
         InputAction zoomInAction = InputActionAsset.FindAction("ZoomIn");
         InputAction zoomOutAction = InputActionAsset.FindAction("ZoomOut");
-        _canvas = GameObject.Find("Canvas");
-        
-        pressAction.started += ctx => {
-            _mousePull.clickDown = true;
-            RaycastHit hit;
-            Vector2 mouse = InputActionAsset.FindAction("Drag").ReadValue<Vector2>();
-            Ray ray = Camera.main.ScreenPointToRay(mouse);
-            bool didHit = Physics.Raycast(ray, out hit, MAX_RAY_DIST);
-            Furniture furniture = hit.transform?.GetComponent<Furniture>();
-            if (furniture != null) {
-                selectFurn(furniture, hit);
-            } else {
-                _dragging = true;
-                _prevMouse = mouse;
-            }
-        };
-        pressAction.canceled += ctx => {
-            _mousePull.clickDown = false; // TODO do we need clickDown?
-            deselectFurn();
-            _dragging = false;
-        };
-        zoomInAction.performed += ctx => {
-            float newY = Mathf.Clamp(transform.position.y - ScrollSensitivity, _levelData.playerMinPos.y, _levelData.playerMaxPos.y);
-            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
-        };
-        zoomOutAction.performed += ctx => {
-            float newY = Mathf.Clamp(transform.position.y + ScrollSensitivity, _levelData.playerMinPos.y, _levelData.playerMaxPos.y);
-            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
-        };
+        pressAction.started += pressStarted;
+        pressAction.canceled += pressCancelled;
+        zoomInAction.performed += zoomIn;
+        zoomOutAction.performed += zoomOut;
+    }
+
+    void OnDestroy() {
+        InputAction pressAction = InputActionAsset.FindAction("Press");
+        InputAction zoomInAction = InputActionAsset.FindAction("ZoomIn");
+        InputAction zoomOutAction = InputActionAsset.FindAction("ZoomOut");
+        pressAction.started -= pressStarted;
+        pressAction.canceled -= pressCancelled;
+        zoomInAction.performed -= zoomIn;
+        zoomOutAction.performed -= zoomOut;
+    }
+
+    private void pressStarted(InputAction.CallbackContext ctx) {
+        _mousePull.clickDown = true;
+        RaycastHit hit;
+        Vector2 mouse = InputActionAsset.FindAction("Drag").ReadValue<Vector2>();
+        Ray ray = Camera.main.ScreenPointToRay(mouse);
+        bool didHit = Physics.Raycast(ray, out hit, MAX_RAY_DIST);
+        Furniture furniture = hit.transform?.GetComponent<Furniture>();
+        if (furniture != null) {
+            selectFurn(furniture, hit);
+        } else {
+            _dragging = true;
+            _prevMouse = mouse;
+        }
+    }
+
+    private void pressCancelled(InputAction.CallbackContext ctx) {
+        _mousePull.clickDown = false; // TODO do we need clickDown?
+        deselectFurn();
+        _dragging = false;
+    }
+
+    private void zoomIn(InputAction.CallbackContext ctx) {
+        float newY = Mathf.Clamp(transform.position.y - ScrollSensitivity, _levelData.playerMinPos.y, _levelData.playerMaxPos.y);
+        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+    }
+
+    private void zoomOut(InputAction.CallbackContext ctx) {
+        float newY = Mathf.Clamp(transform.position.y + ScrollSensitivity, _levelData.playerMinPos.y, _levelData.playerMaxPos.y);
+        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
 
     void Update() {
