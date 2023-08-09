@@ -18,4 +18,16 @@ public class Edge : MonoBehaviour
         }
         return null;
     }
+
+    public Vector3 pointA() {
+        return PointA.p();
+    }
+
+    public Vector3 pointB() {
+        return PointB.p();
+    }
+
+    public float length() {
+        return Vector3.Distance(PointA.p(), PointB.p());
+    }
 }

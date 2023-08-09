@@ -10,6 +10,10 @@ public class ConvexCollider : MonoBehaviour
 
     public Mesh mesh {get; private set;}
 
+    void Start() {
+        gameObject.layer = 6; // Walls layer
+    }
+
     void Awake()
     {
         float box_height = 80f;

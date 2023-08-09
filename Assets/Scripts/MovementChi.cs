@@ -27,10 +27,8 @@ public class MovementChi : MonoBehaviour
     }
 
     void FixedUpdate() {
-        Vector3 ptA = _edge.points()[0];
-        Vector3 ptB = _edge.points()[1];
         _navMeshPath = new();
-        NavMesh.CalculatePath(ptA, ptB, NavMesh.AllAreas, _navMeshPath);
+        NavMesh.CalculatePath(_edge.pointA(), _edge.pointB(), NavMesh.AllAreas, _navMeshPath);
         var smooth = smoothLine(_navMeshPath.corners);
         _lineRenderer.positionCount = smooth.Count;
         _lineRenderer.SetPositions(smooth.ToArray());
