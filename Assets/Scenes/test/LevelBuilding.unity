@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 194434035}
   - component: {fileID: 194434034}
   - component: {fileID: 194434033}
-  - component: {fileID: 194434032}
+  - component: {fileID: 194434036}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -269,23 +269,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &194434032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 194434031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe99837c593994a4184a171e44d7d293, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ValidFurniture:
-  - {fileID: 1533096466}
-  CareAboutOrientation: 1
-  PositionMargin: 1
-  RotationMargin: 5
 --- !u!33 &194434033
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -351,6 +334,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &194434036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194434031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f66df0082a0b4418d9ac6c06b099fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ValidFurniture:
+  - {fileID: 1533096466}
+  CareAboutOrientation: 1
+  PositionMargin: 1
+  RotationMargin: 5
 --- !u!1 &255787404
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 290181944}
   - component: {fileID: 290181943}
   - component: {fileID: 290181942}
-  - component: {fileID: 290181941}
+  - component: {fileID: 290181945}
   m_Layer: 0
   m_Name: Goal (1)
   m_TagString: Untagged
@@ -511,23 +511,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &290181941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 290181940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe99837c593994a4184a171e44d7d293, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ValidFurniture:
-  - {fileID: 160930461}
-  CareAboutOrientation: 0
-  PositionMargin: 1
-  RotationMargin: 5
 --- !u!33 &290181942
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -593,6 +576,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &290181945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290181940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f66df0082a0b4418d9ac6c06b099fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ValidFurniture:
+  - {fileID: 160930461}
+  CareAboutOrientation: 0
+  PositionMargin: 1
+  RotationMargin: 5
 --- !u!1001 &312308267
 PrefabInstance:
   m_ObjectHideFlags: 0
