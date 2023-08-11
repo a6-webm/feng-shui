@@ -81,7 +81,8 @@ public class Door : MonoBehaviour
     private List<Vector3> drawArc(float startAng, float deltaAng, float r, float resolution) {
         List<Vector3> line = new();
         int subDivisions = (int)(resolution * 2*Mathf.PI * r * (Mathf.Abs(deltaAng) / 360));
-        for (int sub = 0; sub < subDivisions; sub++) {
+        line.Add(pointOnFlatCircle(startAng, r));
+        for (int sub = 1; sub < subDivisions; sub++) {
             float a = deltaAng * sub*1f/subDivisions + startAng;
             line.Add(pointOnFlatCircle(a, r));
         }
