@@ -21,8 +21,7 @@ public class Door : MonoBehaviour
         _edge = GetComponent<Edge>();
         _lineRenderer = GetComponent<LineRenderer>();
         var baseRb = gameObject.AddComponent<Rigidbody>();
-        _door = new GameObject();
-        _door.name = "doorobj";
+        _door = new GameObject{ name = "doorCollider" };
         var rb = _door.AddComponent<Rigidbody>();
         _joint = _door.AddComponent<HingeJoint>();
         var collider = _door.AddComponent<BoxCollider>();

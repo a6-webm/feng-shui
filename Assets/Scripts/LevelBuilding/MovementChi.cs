@@ -14,6 +14,7 @@ public class MovementChi : MonoBehaviour
     private Edge _edge;
     private NavMeshPath _navMeshPath;
     private LineRenderer _lineRenderer;
+    private MeshCollider _col;
 
     void Start()
     {
