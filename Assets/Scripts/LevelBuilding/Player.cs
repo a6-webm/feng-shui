@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         Vector2 mouse = InputActionAsset.FindAction("Drag").ReadValue<Vector2>();
         Ray ray = Camera.main.ScreenPointToRay(mouse);
-        bool didHit = Physics.Raycast(ray, out hit, MAX_RAY_DIST);
+        bool didHit = Physics.Raycast(ray, out hit, MAX_RAY_DIST, LayerMask.GetMask("Default", "Turtleable"));
         Furniture furniture = hit.transform?.GetComponent<Furniture>();
         if (furniture != null) {
             selectFurn(furniture, hit);

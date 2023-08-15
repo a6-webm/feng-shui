@@ -11,7 +11,7 @@ public class ConvexCollider : MonoBehaviour
     public Mesh mesh {get; private set;}
 
     void Start() {
-        gameObject.layer = 6; // Walls layer
+        gameObject.layer = LayerMask.NameToLayer("Walls");
     }
 
     void Awake()
@@ -69,7 +69,6 @@ public class ConvexCollider : MonoBehaviour
         meshCollider.convex = MakeConvex;
         meshCollider.isTrigger = false;
         meshCollider.sharedMesh = mesh;
-        gameObject.layer = 2;
     }
 
     private void addTriangle(int v1, int v2, int v3, bool cw, ref List<int> triangles) {
