@@ -47,7 +47,7 @@ public class LevelManager : MonoBehaviour
                 shape = NavMeshBuildSourceShape.Mesh,
                 size = new Vector3(1, 1, 1),
                 area = OBSTACLE,
-                sourceObject = col.mesh
+                sourceObject = col.ColMesh
             };
             buildSources.Add(obstacle);
         }

@@ -12,10 +12,8 @@ public class Turtle : FurnRestriction
     private GameObject _collliderObj;
     private List<Collider> _turtlingColliders = new();
     private int _turtleLayer;
-    private Rigidbody _rigidbody;
 
     void Start() {
-        _rigidbody = GetComponent<Rigidbody>();
         _furniture = GetComponent<Furniture>();
         _collliderObj = new GameObject{ name = "turtleCollider" };
         _collliderObj.transform.SetParent(transform);
@@ -36,8 +34,6 @@ public class Turtle : FurnRestriction
     }
 
     private void onTurtleTriggerEnter(Collider other) {
-        Debug.Log("turtle entered: " + other.gameObject.name);
-        Debug.Log("isKinematic: " + _rigidbody.isKinematic);
         if (((1 << other.gameObject.layer) & _turtleLayer) != 0) {
             if (_turtlingColliders.Count == 0) {
                 _furniture.furnUnlock(this);
@@ -47,8 +43,6 @@ public class Turtle : FurnRestriction
     }
 
     void onTurtleTriggerExit(Collider other) {
-        Debug.Log("turtle exited: " + other.gameObject.name);
-        Debug.Log("isKinematic: " + _rigidbody.isKinematic);
         if (((1 << other.gameObject.layer) & _turtleLayer) != 0) {
             _turtlingColliders.Remove(other);
             if (_turtlingColliders.Count == 0) {

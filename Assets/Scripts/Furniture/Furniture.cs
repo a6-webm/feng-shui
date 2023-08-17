@@ -19,7 +19,8 @@ public class Furniture : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.solverIterations = 24;
         _rigidbody.isKinematic = true;
-        if ((_navMeshObs = GetComponent<NavMeshObstacle>()) != null) {
+        if (GetComponent<ChiPhobic>() == null) {
+            _navMeshObs = gameObject.AddComponent<NavMeshObstacle>();
             _navMeshObs.carvingTimeToStationary = 0f;
             _navMeshObs.carving = true;
         }

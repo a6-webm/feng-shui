@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] float DragStrength = 200f;
     [SerializeField] float ScrollSensitivity = 20f;
     [SerializeField] GameObject LinePrefab;
+    public event Action DeselectEvent;
     private const float MAX_RAY_DIST = 1000f;
     private const float LINE_THICKNESS = 5f;
     private GameObject _selected;
@@ -62,7 +64,7 @@ public class Player : MonoBehaviour
 
     private void pressCancelled(InputAction.CallbackContext ctx) {
         _mousePull.clickDown = false; // TODO do we need clickDown?
-        deselectFurn();
+        if (!_dragging) { deselectFurn(); }
         _dragging = false;
     }
 
@@ -121,6 +123,7 @@ public class Player : MonoBehaviour
     }
 
     void deselectFurn() {
+        DeselectEvent?.Invoke();
         if (_selected != null) {
             _selected.GetComponent<Furniture>().unselected();
             _selected = null;

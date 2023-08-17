@@ -8,14 +8,12 @@ public class ConvexCollider : MonoBehaviour
     [SerializeField] bool PointsClockwise = true;
     [SerializeField] bool MakeConvex = true;
 
-    public Mesh mesh {get; private set;}
-
-    void Start() {
-        gameObject.layer = LayerMask.NameToLayer("Walls");
-    }
+    public Mesh ColMesh {get; private set;}
 
     void Awake()
     {
+        gameObject.layer = LayerMask.NameToLayer("Walls");
+
         float box_height = 80f;
         ConvexShape convexShape = GetComponent<ConvexShape>();
         List<Vector3> points = convexShape.points();
@@ -23,7 +21,6 @@ public class ConvexCollider : MonoBehaviour
             Debug.LogError("ConvexCollider for '" + gameObject.name + "' has less than 3 points");
             return;
         }
-        mesh = new Mesh();
 
         Vector3[] vertices = new Vector3[2 * points.Count];
         for (int i = 0; i < points.Count; i++) {
@@ -32,7 +29,6 @@ public class ConvexCollider : MonoBehaviour
         for (int i = 0; i < points.Count; i++) {
             vertices[points.Count + i] = points[i] + new Vector3(0, box_height/2, 0) - transform.position;
         }
-        mesh.vertices = vertices;
 
         List<int> triangles = new();
         // bottom face triangles
@@ -40,38 +36,40 @@ public class ConvexCollider : MonoBehaviour
             int v1 = 0;
             int v2 = pI;
             int v3 = pI + 1;
-            addTriangle(v1, v2, v3, PointsClockwise, ref triangles);
+            addTriangle(v1, v2, v3, PointsClockwise, triangles);
         }
         // top face triangles
         for (int pI = points.Count + 1; pI < (points.Count*2) - 1; pI++) {
             int v1 = points.Count;
             int v2 = pI + 1;
             int v3 = pI;
-            addTriangle(v1, v2, v3, PointsClockwise, ref triangles);
+            addTriangle(v1, v2, v3, PointsClockwise, triangles);
         }
         // trunk triangles
         for (int pI = 0; pI < points.Count - 1; pI++) {
             int v1 = pI;
             int v2 = pI + points.Count;
             int v3 = pI + points.Count + 1;
-            addTriangle(v1, v2, v3, PointsClockwise, ref triangles);
+            addTriangle(v1, v2, v3, PointsClockwise, triangles);
             v1 = pI;
             v2 = pI + points.Count + 1;
             v3 = pI + 1;
-            addTriangle(v1, v2, v3, PointsClockwise, ref triangles);
+            addTriangle(v1, v2, v3, PointsClockwise, triangles);
         }
-        addTriangle(points.Count - 1, points.Count*2 - 1, points.Count, PointsClockwise, ref triangles);
-        addTriangle(points.Count - 1, points.Count, 0, PointsClockwise, ref triangles);
-
-        mesh.triangles = triangles.ToArray();
+        addTriangle(points.Count - 1, points.Count*2 - 1, points.Count, PointsClockwise, triangles);
+        addTriangle(points.Count - 1, points.Count, 0, PointsClockwise, triangles);
 
         MeshCollider meshCollider = gameObject.AddComponent<MeshCollider>();
         meshCollider.convex = MakeConvex;
         meshCollider.isTrigger = false;
-        meshCollider.sharedMesh = mesh;
+        ColMesh = new Mesh(){
+            vertices = vertices,
+            triangles = triangles.ToArray(),
+        };
+        meshCollider.sharedMesh = ColMesh;
     }
 
-    private void addTriangle(int v1, int v2, int v3, bool cw, ref List<int> triangles) {
+    private void addTriangle(int v1, int v2, int v3, bool cw, List<int> triangles) {
         if (cw) {
             triangles.Add(v1);
             triangles.Add(v2);
