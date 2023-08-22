@@ -3,14 +3,17 @@ using UnityEngine;
 
 public class TurtleCollider : MonoBehaviour
 {
-    public Action<Collider> triggerEnterAction;
-    public Action<Collider> triggerExitAction;
+    private Turtle _turtle;
+
+    void Awake() {
+        _turtle = transform.parent.GetComponent<Turtle>();
+    }
 
     private void OnTriggerEnter(Collider other) {
-        triggerEnterAction?.Invoke(other);
+        _turtle.onTurtleTriggerEnter(other);
     }
 
     private void OnTriggerExit(Collider other) {
-        triggerExitAction?.Invoke(other);
+        _turtle.onTurtleTriggerExit(other);
     }
 }
