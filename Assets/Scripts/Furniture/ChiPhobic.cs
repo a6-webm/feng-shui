@@ -12,7 +12,7 @@ public class ChiPhobic : FurnRestriction
     }
 
     void OnTriggerEnter(Collider other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Chi")) {
+        if (other.tag == "Chi") {
             if (_chiColliders.Count == 0) {
                 _furniture.furnLock(this);
             }
@@ -21,7 +21,7 @@ public class ChiPhobic : FurnRestriction
     }
 
     void OnTriggerExit(Collider other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Chi")) {
+        if (other.tag == "Chi") {
             _chiColliders.Remove(other);
             if (_chiColliders.Count == 0) {
                 _furniture.furnUnlock(this);

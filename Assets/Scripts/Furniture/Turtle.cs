@@ -9,7 +9,7 @@ public class Turtle : FurnRestriction
     [SerializeField] Vector3 BackScale = new Vector3(1, 1, 1);
 
     private Furniture _furniture;
-    private List<Collider> _turtlingColliders = new();
+    private int _turtlingColliders = 0;
 
     void Start() {
         _furniture = GetComponent<Furniture>();
@@ -18,7 +18,7 @@ public class Turtle : FurnRestriction
         collliderObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         collliderObj.AddComponent<TurtleCollider>();
         
-        var turtleRB = collliderObj.AddComponent<Rigidbody>();
+        var turtleRB = collliderObj.AddComponent<Rigidbody>(); // To prevent OnTrigger jitter when toggling isKinematic on the parent
         turtleRB.isKinematic = true;
         turtleRB.useGravity = false;
 
@@ -32,15 +32,15 @@ public class Turtle : FurnRestriction
     }
 
     public void onTurtleTriggerEnter(Collider other) {
-        if (_turtlingColliders.Count == 0) {
+        if (_turtlingColliders == 0) {
             _furniture.furnUnlock(this);
         }
-        _turtlingColliders.Add(other);
+        _turtlingColliders++;
     }
 
     public void onTurtleTriggerExit(Collider other) {
-        _turtlingColliders.Remove(other);
-        if (_turtlingColliders.Count == 0) {
+        _turtlingColliders--;
+        if (_turtlingColliders == 0) {
             _furniture.furnLock(this);
         }
     }

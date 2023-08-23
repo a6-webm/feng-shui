@@ -73,6 +73,7 @@ public class MovementChi : MonoBehaviour
                 obj.layer = LayerMask.NameToLayer("Chi");
                 var col = obj.AddComponent<CapsuleCollider>();
                 col.isTrigger = true;
+                col.tag = "Chi";
                 _capsuleColObjs.Add(obj);
             }
         }
