@@ -11,12 +11,11 @@ public class Elemental : FurnRestriction
     [SerializeField] float Range = 10f;
     [SerializeField] Vector3 CentreOffset;
     private const float HEIGHT = 20f;
-    private Furniture _furniture;
     private int _unlockingElems = 0;
     private int _lockingElems = 0;
-    void Start()
+    new void Start()
     {
-        _furniture = GetComponent<Furniture>();
+        base.Start();
         var collliderObj = new GameObject{ name = "elementCollider" };
         collliderObj.transform.SetParent(transform);
         collliderObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
@@ -35,12 +34,8 @@ public class Elemental : FurnRestriction
         col.includeLayers = colLayer;
     }
 
-    void FixedUpdate() {
-        if (!_furniture.Locked && _lockingElems > _unlockingElems) {
-            _furniture.furnLock(this);
-        } else if (_furniture.Locked && _lockingElems <= _unlockingElems) {
-            _furniture.furnUnlock(this);
-        }
+    override protected bool lockingCondition() {
+        return _lockingElems > _unlockingElems;
     }
 
     void OnTriggerEnter(Collider other) {

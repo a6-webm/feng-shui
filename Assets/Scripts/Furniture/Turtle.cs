@@ -8,11 +8,10 @@ public class Turtle : FurnRestriction
     [SerializeField] Vector3 BackPos;
     [SerializeField] Vector3 BackScale = new Vector3(1, 1, 1);
 
-    private Furniture _furniture;
     private int _turtlingColliders = 0;
 
-    void Start() {
-        _furniture = GetComponent<Furniture>();
+    new void Start() {
+        base.Start();
         var collliderObj = new GameObject{ name = "turtleCollider" };
         collliderObj.transform.SetParent(transform);
         collliderObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
@@ -31,17 +30,15 @@ public class Turtle : FurnRestriction
         col.includeLayers = turtleLayer;
     }
 
+    protected override bool lockingCondition() {
+        return _turtlingColliders == 0;
+    }
+
     public void onTurtleTriggerEnter(Collider other) {
-        if (_turtlingColliders == 0) {
-            _furniture.furnUnlock(this);
-        }
         _turtlingColliders++;
     }
 
     public void onTurtleTriggerExit(Collider other) {
         _turtlingColliders--;
-        if (_turtlingColliders == 0) {
-            _furniture.furnLock(this);
-        }
     }
 }

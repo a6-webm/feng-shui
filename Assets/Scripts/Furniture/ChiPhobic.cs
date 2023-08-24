@@ -2,30 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChiPhobic : FurnRestriction
-{
-    private Furniture _furniture;
-    private List<Collider> _chiColliders = new();
+public class ChiPhobic : FurnRestriction {
 
-    void Start() {
-        _furniture = GetComponent<Furniture>();
+    private int _chiColliders = 0;
+
+    override protected bool lockingCondition() {
+        return _chiColliders != 0;
     }
 
     void OnTriggerEnter(Collider other) {
         if (other.tag == "Chi") {
-            if (_chiColliders.Count == 0) {
-                _furniture.furnLock(this);
-            }
-            _chiColliders.Add(other);
+            _chiColliders++;
         }
     }
 
     void OnTriggerExit(Collider other) {
         if (other.tag == "Chi") {
-            _chiColliders.Remove(other);
-            if (_chiColliders.Count == 0) {
-                _furniture.furnUnlock(this);
-            }
+            _chiColliders--;
         }
     }
 }

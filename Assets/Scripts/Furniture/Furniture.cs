@@ -9,10 +9,10 @@ using UnityEngine.UIElements;
 public class Furniture : MonoBehaviour
 {
     public bool Locked { get; private set; } = false;
+    private Dictionary<FurnRestriction, bool> Restrictions = new();
     private Action _lockedEvent;
     private Rigidbody _rigidbody;
     private NavMeshObstacle _navMeshObs;
-    private List<FurnRestriction> _furnRestrictions = new();
     
     void Start()
     {
@@ -27,19 +27,28 @@ public class Furniture : MonoBehaviour
         unselected();
     }
 
-    public void furnLock(FurnRestriction furnRestriction) {
-        if (_furnRestrictions.Count == 0) {
+    public void registerRestriction(FurnRestriction restriction, bool locked = false) {
+        Restrictions[restriction] = locked;
+    }
+
+    public bool isLocked(FurnRestriction restriction) {
+        return Restrictions[restriction];
+    }
+
+    public void furnLock(FurnRestriction restriction) {
+        Restrictions[restriction] = true;
+        if (!Locked) {
             Locked = true;
             _lockedEvent?.Invoke();
         }
-        _furnRestrictions.Add(furnRestriction);
     }
 
-    public void furnUnlock(FurnRestriction furnRestriction) {
-        _furnRestrictions.Remove(furnRestriction);
-        if (_furnRestrictions.Count == 0) {
-            Locked = false;
+    public void furnUnlock(FurnRestriction restriction) {
+        Restrictions[restriction] = false;
+        foreach (bool restrLocked in Restrictions.Values) {
+            if (restrLocked) { return;}
         }
+        Locked = false;
     }
 
     public bool selected(Action f) {
