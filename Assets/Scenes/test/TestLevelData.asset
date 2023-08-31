@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCanChangeHeight: 1
   playerCanPan: 1
-  playerMaxPos: {x: 80, y: 400, z: 0}
+  playerMaxPos: {x: 120, y: 400, z: 0}
   playerMinPos: {x: 0, y: 40, z: -80}
   playerStartPos: {x: 40, y: 150, z: -60}
   navMaxPos: {x: 80, y: 0}
