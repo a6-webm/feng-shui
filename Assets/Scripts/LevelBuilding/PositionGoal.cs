@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PositionGoal : Goal
 {
+    [SerializeField] Material MetMaterial;
+    [SerializeField] Material UnmetMaterial;
     [SerializeField] List<GameObject> ValidFurniture;
     [SerializeField] bool CareAboutOrientation = true;
     [SerializeField] float PositionMargin = 1f;
@@ -11,16 +13,12 @@ public class PositionGoal : Goal
     private LevelManager _levelManager;
     private GameObject _metFurn = null;
     private MeshRenderer _meshRenderer;
-    private Material _metMaterial;
-    private Material _unmetMaterial;
 
     void Start()
     {
         _levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         _meshRenderer = GetComponent<MeshRenderer>();
-        _metMaterial = Resources.Load<Material>("metGoal");
-        _unmetMaterial = Resources.Load<Material>("unmetGoal");
-        _meshRenderer.material = _unmetMaterial;
+        _meshRenderer.material = UnmetMaterial;
     }
 
     void FixedUpdate() {
@@ -49,13 +47,13 @@ public class PositionGoal : Goal
 
     void meetGoal(GameObject furn) {
         _metFurn = furn;
-        _meshRenderer.material = _metMaterial;
+        _meshRenderer.material = MetMaterial;
         _levelManager.goalMet(this);
     }
 
     void unmeetGoal() {
         _metFurn = null;
-        _meshRenderer.material = _unmetMaterial;
+        _meshRenderer.material = UnmetMaterial;
         _levelManager.goalUnmet(this);
     }
 }

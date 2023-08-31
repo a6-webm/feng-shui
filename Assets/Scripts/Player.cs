@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] float DragStrength = 200f;
     [SerializeField] float ScrollSensitivity = 20f;
     [SerializeField] GameObject LinePrefab;
-    public event Action DeselectEvent;
+    public event Action<GameObject> DeselectEvent;
     private const float MAX_RAY_DIST = 1000f;
     private const float LINE_THICKNESS = 5f;
     private PlayerState _state;
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
         } else {
             if (_focusedFurn != null) {
                 _focusedFurn.GetComponent<Furniture>().setState(PlayerFurnState.None);
-                DeselectEvent?.Invoke();
+                DeselectEvent?.Invoke(_focusedFurn);
             }
             _focusedFurn = null;
         }

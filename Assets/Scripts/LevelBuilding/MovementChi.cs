@@ -6,14 +6,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.AI.NavMeshPathStatus;
 
-[RequireComponent(typeof(Edge), typeof(LineRenderer))]
+[RequireComponent(typeof(Edge))]
 public class MovementChi : MonoBehaviour
 {
     [SerializeField] float LineSmoothness = 2.18f;
     [SerializeField] float LineSmoothnessScaling = 0.25f;
     [SerializeField] float LineResolution = 3f;
     [SerializeField] float ColliderResolution = 0.4f;
-    [SerializeField] float LineWidth = 1f;
+    [SerializeField] float ColliderWidth = 4f;
     private const float LINEHEIGHT = 5f;
     private Edge _edge;
     private NavMeshPath _navMeshPath;
@@ -26,21 +26,14 @@ public class MovementChi : MonoBehaviour
         FindAnyObjectByType<Player>().DeselectEvent += newChiLine;
         gameObject.layer = LayerMask.NameToLayer("Chi");
         _edge = GetComponent<Edge>();
-        _lineRenderer = GetComponent<LineRenderer>();
-        var lineObj = new GameObject(){ name = "chiLine" };
-        lineObj.transform.SetParent(transform);
-        _lineRenderer = lineObj.AddComponent<LineRenderer>();
-
-        lineObj.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
-        _lineRenderer.numCapVertices = 5;
-        _lineRenderer.widthMultiplier = LineWidth;
-        _lineRenderer.alignment = LineAlignment.TransformZ;
-        _lineRenderer.material = Resources.Load<Material>("movement_chi");
-
-        newChiLine();    
+        var lineObj = transform.Find("ChiLine");
+        _lineRenderer = lineObj.GetComponent<LineRenderer>();
+        _lineRenderer.widthMultiplier = ColliderWidth;
+        newChiLine();
     }
 
-    private void newChiLine() {
+    private void newChiLine(GameObject furniture = null) {
+        if (furniture != null && furniture.GetComponent<ChiPhobic>() != null) return;
         _navMeshPath = new();
         NavMesh.CalculatePath(_edge.pointA(), _edge.pointB(), NavMesh.AllAreas, _navMeshPath);
         var smooth = smoothLine(_navMeshPath.corners, LineResolution);
@@ -92,7 +85,7 @@ public class MovementChi : MonoBehaviour
             var obj = _capsuleColObjs[i];
             obj.SetActive(true);
             obj.transform.position = line[i];
-            obj.transform.localScale = new Vector3(LineWidth, LINEHEIGHT + LineWidth, LineWidth);
+            obj.transform.localScale = new Vector3(ColliderWidth, LINEHEIGHT + ColliderWidth, ColliderWidth);
         }
         for (int i = line.Count; i < _capsuleColObjs.Count; i++) {
             _capsuleColObjs[i].SetActive(false);
@@ -104,7 +97,7 @@ public class MovementChi : MonoBehaviour
             var nextPt = line[i+1];
             obj.transform.position = (nextPt + pt)/2;
             obj.transform.rotation = Quaternion.LookRotation(nextPt - pt, Vector3.up);
-            obj.transform.localScale = new Vector3(LineWidth, LINEHEIGHT, (nextPt - pt).magnitude);
+            obj.transform.localScale = new Vector3(ColliderWidth, LINEHEIGHT, (nextPt - pt).magnitude);
         }
         for (int i = line.Count-1; i < _boxColObjs.Count; i++) {
             _boxColObjs[i].SetActive(false);
